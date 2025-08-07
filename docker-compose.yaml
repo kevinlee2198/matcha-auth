@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  supertokens-core:
+    image: supertokens/supertokens-postgresql
+    container_name: supertokens-core
+    restart: unless-stopped
+    ports:
+      - "3567:3567"
+    environment:
+      POSTGRESQL_CONNECTION_URI: postgres://supertokens_user:password@postgres:5432/supertokens_db
+      API_KEYS: "my-very-secret-api-key-12345"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14
+    container_name: supertokens-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: supertokens_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: supertokens_db
